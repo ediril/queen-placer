@@ -1,5 +1,10 @@
 package com.queens;
 
+import org.apache.commons.collections4.iterators.PermutationIterator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -15,6 +20,17 @@ public class Main {
 
         try {
             int N = Integer.parseInt(args[0]);
+
+            // Generate a list of column id's
+            List<Integer> columns = new ArrayList<>(N);
+            for (int c=0; c < N; c++) {
+                columns.add(c);
+            }
+
+            // Steinhaus-Johnson-Trotter algorithm (aka Plain Changes algorithm)
+            // to generate all permutations of one queen per row & col
+            PermutationIterator<Integer> permIterator = new PermutationIterator<>(columns);
+
         }
         catch (NumberFormatException e) {
             System.out.println("ERROR: Invalid input argument, N must be integer");
