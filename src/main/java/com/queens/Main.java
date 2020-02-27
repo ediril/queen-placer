@@ -23,34 +23,33 @@ public class Main {
         try {
             int N = Integer.parseInt(args[0]);
 
-            // Generate a list of column id's
+            // Create the list of column numbers for the board
             List<Integer> columns = new ArrayList<>(N);
-            for (int c=0; c < N; c++) {
-                columns.add(c);
+            for (int col=0; col < N; col++) {
+                columns.add(col);
             }
 
-            // Steinhaus-Johnson-Trotter algorithm (aka Plain Changes algorithm)
-            // to generate all permutations of one queen per row & col
+            // Iteratively generate permutations of column numbers
+            // Uses Steinhaus-Johnson-Trotter algorithm, aka "Plain Changes")
             PermutationIterator<Integer> permIterator = new PermutationIterator<>(columns);
 
-            // Since we are using a permutation algorithm on column id's, there will be
-            // exactly one queen per row and per column. So, we just need to check
-            // attacks diagonally and the no-straight-line constraint
+            // Each permutation is a list of size N to represent queen locations on the
+            // board. Indices indicate the row number of the queen whereas values
+            // indicate the column number. This representation automatically enforces that
+            // there is only one queen per row and per column (partially fulfilling the requirement
+            // that queens can't attack each other). Row numbers and column numbers start at 0
+            // and (0,0) is the top left corner of the board.
             //
-            // Left to right diagonals: col# - row#
-            //  0  1  2  3
-            // -1  0  1  2
-            // -2 -1  0  1
-            // -3 -2 -1  0
-            //
-            // Right to left diagonals: col# + row#
-            //  0  1  2  3
-            //  1  2  3  4
-            //  2  3  4  5
-            //  3  4  5  6
-            Set<Integer> rightDiagonals = new HashSet<>(N);
-            Set<Integer> leftDiagonals = new HashSet<>(N);
+            // Ex: the list [2, 3, 1, 0, 4] translates to the following board:
+            //   0 1 2 3 4
+            // 0 . . Q . .
+            // 1 . . . Q .
+            // 2 . Q . . .
+            // 3 Q . . . .
+            // 4 . . . . Q
 
+            Set<Integer> leftDiagonals = new HashSet<>(N);
+            Set<Integer> rightDiagonals = new HashSet<>(N);
             while (permIterator.hasNext()) {
                 List<Integer> permutation = permIterator.next();
 
@@ -58,19 +57,33 @@ public class Main {
                 rightDiagonals.clear();
                 for (int row=0; row < N; row++) {
                     int col = permutation.get(row);
+
+                    // "Left" slanted diagonals: col# - row#
+                    //  0  1  2  3
+                    // -1  0  1  2
+                    // -2 -1  0  1
+                    // -3 -2 -1  0
                     leftDiagonals.add(col + row);
+
+                    // "Right" slanted diagonals: col# + row#
+                    //  0  1  2  3
+                    //  1  2  3  4
+                    //  2  3  4  5
+                    //  3  4  5  6
                     rightDiagonals.add(col - row);
                 }
 
-                // If there is one of each column id's in each set, it means
-                // each queen is on its own diagonal so none can attack another
+                // If there is one of each column number in each set, then each queen is
+                // on its own diagonal. Therefore they cannot attack each other
                 if (leftDiagonals.size() == N &&
                     rightDiagonals.size() == N) {
+                    // TODO: Check no-straight-line rule
+
+                    // TODO: Convert to ASCII picture
                     System.out.println(permutation);
                 }
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("ERROR: Invalid input argument, N must be integer");
             System.exit(1);
         }
