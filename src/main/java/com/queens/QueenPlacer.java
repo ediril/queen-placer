@@ -44,42 +44,44 @@ public class QueenPlacer {
         // 4 . . . . Q
 
         int numSolutions = 0;
-        Set<Integer> leftDiagonals = new HashSet<>(size);
-        Set<Integer> rightDiagonals = new HashSet<>(size);
         while (permIterator.hasNext()) {
             List<Integer> permutation = permIterator.next();
 
-            leftDiagonals.clear();
-            rightDiagonals.clear();
-            for (int row=0; row < size; row++) {
-                int col = permutation.get(row);
-
-                // "Left" slanted diagonals: col# - row#
-                //  0  1  2  3
-                // -1  0  1  2
-                // -2 -1  0  1
-                // -3 -2 -1  0
-                leftDiagonals.add(col - row);
-
-                // "Right" slanted diagonals: col# + row#
-                //  0  1  2  3
-                //  1  2  3  4
-                //  2  3  4  5
-                //  3  4  5  6
-                rightDiagonals.add(col + row);
-            }
-
-            // If there is one of each column number in each set, then each queen is
-            // on its own diagonal. Therefore they cannot attack each other
-            if (leftDiagonals.size() == size && rightDiagonals.size() == size) {
-                if (!containsStraightLine(permutation)) {
-                    numSolutions++;
-                    solution.accept(permutation);
-                }
+            if (!containsDiagonalAttack(permutation) && !containsStraightLine(permutation)) {
+                numSolutions++;
+                solution.accept(permutation);
             }
         }
 
         return numSolutions;
+    }
+
+    public static boolean containsDiagonalAttack(List<Integer> queens) {
+        int N = queens.size();
+        Set<Integer> leftDiagonals = new HashSet<>(N);
+        Set<Integer> rightDiagonals = new HashSet<>(N);
+
+        for (int row=0; row < N; row++) {
+            int col = queens.get(row);
+
+            // "Left" slanted diagonals: col# - row#
+            //  0  1  2  3
+            // -1  0  1  2
+            // -2 -1  0  1
+            // -3 -2 -1  0
+            leftDiagonals.add(col - row);
+
+            // "Right" slanted diagonals: col# + row#
+            //  0  1  2  3
+            //  1  2  3  4
+            //  2  3  4  5
+            //  3  4  5  6
+            rightDiagonals.add(col + row);
+        }
+
+        // If there is one of each column number in each set, then each queen is
+        // on its own diagonal and they cannot attack each other
+        return leftDiagonals.size() != N || rightDiagonals.size() != N;
     }
 
     public static boolean containsStraightLine(List<Integer> queens) {

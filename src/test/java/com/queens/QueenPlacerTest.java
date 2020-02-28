@@ -32,4 +32,16 @@ public class QueenPlacerTest {
 
         assertEquals(result, expected);
     }
+
+    @Test
+    public void containsDiagonalAttack() {
+        assertTrue( QueenPlacer.containsDiagonalAttack( Arrays.asList( 0, 1, 2, 3)));
+        assertTrue( QueenPlacer.containsDiagonalAttack( Arrays.asList( 3, 2, 1, 0)));
+    }
+
+    @Test
+    public void noDiagonalAttack() {
+        assertFalse( QueenPlacer.containsDiagonalAttack( Arrays.asList( 1, 3, 0, 2)));
+        assertFalse( QueenPlacer.containsDiagonalAttack( Arrays.asList( 5, 2, 0, 6, 4, 7, 1, 3)));
+    }
 }
