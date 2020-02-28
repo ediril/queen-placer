@@ -11,9 +11,9 @@ public class QueenPlacerTest {
 
     @Test
     public void reportResults() {
-        assertEquals(QueenPlacer.report(0), "No solutions found");
-        assertEquals(QueenPlacer.report(1), "1 solution found");
-        assertEquals(QueenPlacer.report(2), "2 solutions found");
+        assertEquals("No solutions found", QueenPlacer.report(0));
+        assertEquals("1 solution found", QueenPlacer.report(1));
+        assertEquals("2 solutions found", QueenPlacer.report(2));
     }
 
     @Test
@@ -28,9 +28,9 @@ public class QueenPlacerTest {
                 ". . . . . . . Q \n" +
                 ". . . . . Q . . \n" +
                 ". . Q . . . . . \n";
-        String result = QueenPlacer.solutionToAsciiBoard(solution);
+        String actual = QueenPlacer.solutionToAsciiBoard(solution);
 
-        assertEquals(result, expected);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -64,6 +64,6 @@ public class QueenPlacerTest {
     public void numberOfPossibleSolutions() {
         QueenPlacer placer = new QueenPlacer(6);
         int expected = 6 * 5 * 4 * 3 * 2;
-        assertEquals(placer.numberOfPossibleSolutions().intValue(), expected);
+        assertEquals(expected, placer.numberOfPossibleSolutions().intValue());
     }
 }
