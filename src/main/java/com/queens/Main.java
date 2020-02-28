@@ -2,10 +2,7 @@ package com.queens;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
@@ -22,6 +19,8 @@ public class Main {
 
         try {
             int N = Integer.parseInt(args[0]);
+
+            // TODO: Check N > 0
 
             // Create the list of column numbers for the board
             List<Integer> columns = new ArrayList<>(N);
@@ -48,6 +47,7 @@ public class Main {
             // 3 Q . . . .
             // 4 . . . . Q
 
+            int numSolutions = 0;
             Set<Integer> leftDiagonals = new HashSet<>(N);
             Set<Integer> rightDiagonals = new HashSet<>(N);
             while (permIterator.hasNext()) {
@@ -75,17 +75,44 @@ public class Main {
 
                 // If there is one of each column number in each set, then each queen is
                 // on its own diagonal. Therefore they cannot attack each other
-                if (leftDiagonals.size() == N &&
-                    rightDiagonals.size() == N) {
-                    // TODO: Check no-straight-line rule
-
-                    // TODO: Convert to ASCII picture
-                    System.out.println(permutation);
+                if (leftDiagonals.size() == N && rightDiagonals.size() == N) {
+                    if (!containsStraightLine(permutation)) {
+                        numSolutions++;
+                        System.out.println(permutation);
+                    }
                 }
             }
+
+            System.out.println(String.format("%s solution%s found",
+                    numSolutions == 0 ? "No" : numSolutions,
+                    numSolutions != 1 ? "s" : ""));
+
         } catch (NumberFormatException e) {
             System.out.println("ERROR: Invalid input argument, N must be integer");
             System.exit(1);
         }
+    }
+
+    public static boolean containsStraightLine(List<Integer> queens) {
+        int N = queens.size();
+
+        // Calculate slopes from each queen to other queens moving from top of board down
+        Set<Float> slopes = new HashSet<>(N);
+        for (int q1=0; q1 < N; q1++) {
+            // Consider only queens below the current queen on the board
+            for (int q2=q1+1; q2 < N; q2++) {
+                int yDist = q2-q1;
+                int xDist = queens.get(q2) - queens.get(q1);
+                float slope = (float) yDist / xDist;
+                slopes.add(slope);
+            }
+
+            // If there are non-unique slopes, then no-straight-line constraint is violated
+            if (slopes.size() != (N-1) - q1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
