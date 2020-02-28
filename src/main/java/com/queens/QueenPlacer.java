@@ -89,18 +89,19 @@ public class QueenPlacer {
 
         // Calculate slopes from each queen to other queens moving from top of board down
         Set<Float> slopes = new HashSet<>(N);
-        for (int q1=0; q1 < N; q1++) {
+        for (int rowQ1=0; rowQ1 < N; rowQ1++) {
             slopes.clear();
             // Consider only queens below the current queen on the board
-            for (int q2=q1+1; q2 < N; q2++) {
-                int yDist = q2-q1;
-                int xDist = queens.get(q2) - queens.get(q1);
+            for (int rowQ2=rowQ1+1; rowQ2 < N; rowQ2++) {
+                int yDist = rowQ2 - rowQ1;
+                int xDist = queens.get(rowQ2) - queens.get(rowQ1);
                 float slope = (float) yDist / xDist;
                 slopes.add(slope);
             }
 
-            // If there are non-unique slopes, then no-straight-line constraint is violated
-            if (slopes.size() != (N-1) - q1) {
+            // If there are non-unique slopes, then the no-straight-line constraint is violated
+            int numUniqueSlopes = (N - rowQ1) - 1;
+            if (slopes.size() != numUniqueSlopes) {
                 return true;
             }
         }
