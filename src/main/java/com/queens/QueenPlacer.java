@@ -120,9 +120,9 @@ public class QueenPlacer {
         System.out.println("");
     }
 
-    public static void reportResults(int numSolutions) {
-        System.out.println(String.format("%s solution%s found",
+    public static String report(int numSolutions) {
+        return String.format("%s solution%s found",
                 numSolutions == 0 ? "No" : numSolutions,
-                numSolutions != 1 ? "s" : ""));
+                numSolutions != 1 ? "s" : "");
     }
 }

@@ -20,7 +20,7 @@ public class Main {
 
             QueenPlacer placer = new QueenPlacer(N);
             int numSolutions = placer.findSolutions(QueenPlacer::displaySolution);
-            QueenPlacer.reportResults(numSolutions);
+            System.out.println(QueenPlacer.report(numSolutions));
 
         } catch (ArgumentParserException e) {
             parser.handleError(e);
