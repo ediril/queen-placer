@@ -19,3 +19,20 @@ N queens on an NxN chessboard such that:
 
 # Usage
         java -jar build/libs/queen_placer-1.0.0.jar <board_size>
+
+# Example output
+        java -jar build/libs/queen_placer-1.0.0.jar 4
+
+        Searching through 24 possible solutions
+
+        . . Q .
+        Q . . .
+        . . . Q
+        . Q . .
+        
+        . Q . .
+        . . . Q
+        Q . . .
+        . . Q .
+        
+        2 solutions found
