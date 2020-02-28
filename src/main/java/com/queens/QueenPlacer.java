@@ -12,15 +12,27 @@ import java.util.function.Consumer;
 public class QueenPlacer {
 
     private final List<Integer> columns;
+    private final int boardSize;
 
-    public QueenPlacer(int size) {
+    public QueenPlacer(int boardSize) {
+        this.boardSize = boardSize;
+
         // Create the list of column numbers for the board
-        columns = new ArrayList<>(size);
-        for (int col=0; col < size; col++) {
+        columns = new ArrayList<>(boardSize);
+        for (int col=0; col < boardSize; col++) {
             columns.add(col);
         }
     }
 
+    /**
+     * Iteratively generates permutations of possible queen placements and
+     * finds the ones that obey the following two constraints:
+     * 1) None of the queens can attack each other
+     * 2) No three queens are in a straight line at ANY angle
+     *
+     * @param solution  lambda function to call when a solution is found
+     * @return          number of found solutions
+     */
     public int findSolutions(Consumer<List<Integer>> solution) {
         // Iteratively generate permutations of column numbers
         // Uses Steinhaus-Johnson-Trotter algorithm, aka "Plain Changes")
@@ -54,13 +66,19 @@ public class QueenPlacer {
         return numSolutions;
     }
 
-    public static boolean containsDiagonalAttack(List<Integer> queens) {
-        int N = queens.size();
+    /**
+     * Check if the given queen placement contains any diagonal attacks
+     *
+     * @param queenPlacement    Placement of queens in list format
+     * @return                  True if there are any queens that can attack each other
+     */
+    public static boolean containsDiagonalAttack(List<Integer> queenPlacement) {
+        int N = queenPlacement.size();
         Set<Integer> leftDiagonals = new HashSet<>(N);
         Set<Integer> rightDiagonals = new HashSet<>(N);
 
         for (int row=0; row < N; row++) {
-            int col = queens.get(row);
+            int col = queenPlacement.get(row);
 
             // "Left" slanted diagonals: col# - row#
             //  0  1  2  3
@@ -82,8 +100,15 @@ public class QueenPlacer {
         return leftDiagonals.size() != N || rightDiagonals.size() != N;
     }
 
-    public static boolean containsStraightLinePlacement(List<Integer> queens) {
-        int N = queens.size();
+    /**
+     * Check if the given queen placement contains any straight line arrangement of queens
+     * at any angle
+     *
+     * @param queenPlacement    Placement of queens in list format
+     * @return                  True if there are any 3 or more queens in a straight line
+     */
+    public static boolean containsStraightLinePlacement(List<Integer> queenPlacement) {
+        int N = queenPlacement.size();
 
         // Calculate slopes from each queen to other queens moving from top of board down
         Set<Float> slopes = new HashSet<>(N);
@@ -92,7 +117,7 @@ public class QueenPlacer {
             // Consider only queens below the current queen on the board
             for (int rowQ2=rowQ1+1; rowQ2 < N; rowQ2++) {
                 int yDist = rowQ2 - rowQ1;
-                int xDist = queens.get(rowQ2) - queens.get(rowQ1);
+                int xDist = queenPlacement.get(rowQ2) - queenPlacement.get(rowQ1);
                 float slope = (float) yDist / xDist;
                 slopes.add(slope);
             }
@@ -107,11 +132,17 @@ public class QueenPlacer {
         return false;
     }
 
-    public static String solutionToAsciiBoard(List<Integer> queens) {
+    /**
+     * Convert the queen placement from list format to ASCII board visualization
+     *
+     * @param queenPlacement    Placement of queens in list format
+     * @return                  String which holds the ASCII art that can be printed to CLI
+     */
+    public static String solutionToAsciiBoard(List<Integer> queenPlacement) {
         StringBuilder sb = new StringBuilder();
 
-        for (int queen : queens) {
-            for (int col=0; col < queens.size(); col++) {
+        for (int queen : queenPlacement) {
+            for (int col=0; col < queenPlacement.size(); col++) {
                 if (queen == col)
                     sb.append("Q ");
                 else
@@ -129,9 +160,12 @@ public class QueenPlacer {
                 numSolutions != 1 ? "s" : "");
     }
 
+    /**
+     * Calculates number of possible solutions for the given board size
+     */
     public BigInteger numberOfPossibileSolutions() {
         BigInteger factorial = new BigInteger("1");
-        for (int i = 1; i <= columns.size(); i++) {
+        for (int i = 1; i <= boardSize; i++) {
             factorial = factorial.multiply(new BigInteger(i + ""));
         }
 
