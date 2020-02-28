@@ -163,7 +163,7 @@ public class QueenPlacer {
     /**
      * Calculates number of possible solutions for the given board size
      */
-    public BigInteger numberOfPossibileSolutions() {
+    public BigInteger numberOfPossibleSolutions() {
         BigInteger factorial = new BigInteger("1");
         for (int i = 1; i <= boardSize; i++) {
             factorial = factorial.multiply(new BigInteger(i + ""));
