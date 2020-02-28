@@ -10,29 +10,37 @@ N queens on an NxN chessboard such that:
 * Gradle version >= 6.2
 
 # Building
-        git clone https://github.com/ediril/queen_placer.git
-        cd queen_placer
-        gradle jar
+~~~ sh
+ git clone https://github.com/ediril/queen_placer.git
+ cd queen_placer
+ gradle jar
+~~~
 
 # Running tests
-        gradle test
+~~~ sh
+ gradle test
+~~~
 
 # Usage
-        java -jar build/libs/queen_placer-1.0.0.jar <board_size>
+~~~ sh
+ java -jar build/libs/queen_placer-1.0.0.jar <board_size>
+~~~
 
 # Example output
-        java -jar build/libs/queen_placer-1.0.0.jar 4
+~~~ sh
+ java -jar build/libs/queen_placer-1.0.0.jar 4
 
-        Searching through 24 possible solutions
+ Searching through 24 possible solutions
 
-        . . Q .
-        Q . . .
-        . . . Q
-        . Q . .
-        
-        . Q . .
-        . . . Q
-        Q . . .
-        . . Q .
-        
-        2 solutions found
+ . . Q .
+ Q . . .
+ . . . Q
+ . Q . .
+
+ . Q . .
+ . . . Q
+ Q . . .
+ . . Q .
+
+ 2 solutions found
+~~~
