@@ -60,4 +60,10 @@ public class QueenPlacerTest {
         assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(5, 3, 0, 4, 7, 1, 6, 2)));
     }
 
+    @Test
+    public void numberOfPossibleSolutions() {
+        QueenPlacer placer = new QueenPlacer(6);
+        int expected = 6 * 5 * 4 * 3 * 2;
+        assertEquals(placer.numberOfPossibleSolutions().intValue(), expected);
+    }
 }
