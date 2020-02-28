@@ -47,7 +47,7 @@ public class QueenPlacer {
         while (permIterator.hasNext()) {
             List<Integer> permutation = permIterator.next();
 
-            if (!containsDiagonalAttack(permutation) && !containsStraightLine(permutation)) {
+            if (!containsDiagonalAttack(permutation) && !containsStraightLinePlacement(permutation)) {
                 numSolutions++;
                 solution.accept(permutation);
             }
@@ -84,12 +84,13 @@ public class QueenPlacer {
         return leftDiagonals.size() != N || rightDiagonals.size() != N;
     }
 
-    public static boolean containsStraightLine(List<Integer> queens) {
+    public static boolean containsStraightLinePlacement(List<Integer> queens) {
         int N = queens.size();
 
         // Calculate slopes from each queen to other queens moving from top of board down
         Set<Float> slopes = new HashSet<>(N);
         for (int q1=0; q1 < N; q1++) {
+            slopes.clear();
             // Consider only queens below the current queen on the board
             for (int q2=q1+1; q2 < N; q2++) {
                 int yDist = q2-q1;
