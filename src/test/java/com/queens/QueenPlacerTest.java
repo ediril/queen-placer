@@ -44,4 +44,20 @@ public class QueenPlacerTest {
         assertFalse( QueenPlacer.containsDiagonalAttack( Arrays.asList( 1, 3, 0, 2)));
         assertFalse( QueenPlacer.containsDiagonalAttack( Arrays.asList( 5, 2, 0, 6, 4, 7, 1, 3)));
     }
+
+    @Test
+    public void containsStraightLinePlacement() {
+        assertTrue( QueenPlacer.containsStraightLinePlacement( Arrays.asList( 0, 2, 4, 1, 0)));
+        assertTrue( QueenPlacer.containsStraightLinePlacement( Arrays.asList( 4, 2, 0, 1, 0)));
+        assertTrue( QueenPlacer.containsStraightLinePlacement( Arrays.asList( 0, 3, 1, 4, 2)));
+        assertTrue( QueenPlacer.containsStraightLinePlacement( Arrays.asList( 2, 3, 1, 4, 0)));
+    }
+
+    @Test
+    public void noStraightLinePlacement() {
+        assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(2, 0, 3, 1)));
+        assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(0, 3, 1, 4, 3)));
+        assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(5, 3, 0, 4, 7, 1, 6, 2)));
+    }
+
 }
