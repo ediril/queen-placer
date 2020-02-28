@@ -19,9 +19,14 @@ public class Main {
             }
 
             QueenPlacer placer = new QueenPlacer(N);
+
+            System.out.println(String.format("Searching through %s possible solutions\n",
+                    placer.numberOfPossibileSolutions().toString()));
+
             int numSolutions = placer.findSolutions(solution -> {
                 System.out.println(QueenPlacer.solutionToAsciiBoard(solution));
             });
+
             System.out.println(QueenPlacer.report(numSolutions));
 
         } catch (ArgumentParserException e) {

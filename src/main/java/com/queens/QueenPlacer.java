@@ -2,6 +2,7 @@ package com.queens;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -126,5 +127,14 @@ public class QueenPlacer {
         return String.format("%s solution%s found",
                 numSolutions == 0 ? "No" : numSolutions,
                 numSolutions != 1 ? "s" : "");
+    }
+
+    public BigInteger numberOfPossibileSolutions() {
+        BigInteger factorial = new BigInteger("1");
+        for (int i = 1; i <= columns.size(); i++) {
+            factorial = factorial.multiply(new BigInteger(i + ""));
+        }
+
+        return factorial;
     }
 }
