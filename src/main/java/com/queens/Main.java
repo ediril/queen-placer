@@ -78,7 +78,7 @@ public class Main {
                 if (leftDiagonals.size() == N && rightDiagonals.size() == N) {
                     if (!containsStraightLine(permutation)) {
                         numSolutions++;
-                        System.out.println(permutation);
+                        displaySolution(permutation);
                     }
                 }
             }
@@ -114,5 +114,20 @@ public class Main {
         }
 
         return false;
+    }
+    
+    public static void displaySolution(List<Integer> queens) {
+        System.out.println(queens);
+
+        for (int queen : queens) {
+            for (int col=0; col < queens.size(); col++) {
+                if (queen == col)
+                    System.out.print("Q ");
+                else
+                    System.out.print(". ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
     }
 }
