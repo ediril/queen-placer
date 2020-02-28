@@ -1,23 +1,20 @@
 package com.queens;
 
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+
 public class Main {
 
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("ERROR: Missing input argument, provide an integer for N");
-            System.exit(1);
-        }
-
-        if (args.length > 1) {
-            System.out.println("ERROR: Too many input arguments");
-            System.exit(1);
-        }
+        ArgumentParser parser = ArgumentParsers.newFor("queen_placer").build();
+        parser.addArgument("board_size").type(Integer.class);
 
         try {
-            int N = Integer.parseInt(args[0]);
+            int N = parser.parseArgs(args).get("board_size");
 
             if (N == 0) {
-                System.out.println("ERROR: Invalid input argument, N must be nonzero");
+                System.out.println("Invalid board_size, must be greater than zero");
                 System.exit(1);
             }
 
@@ -25,8 +22,8 @@ public class Main {
             int numSolutions = placer.findSolutions(QueenPlacer::displaySolution);
             QueenPlacer.reportResults(numSolutions);
 
-        } catch (NumberFormatException e) {
-            System.out.println("ERROR: Invalid input argument, N must be integer");
+        } catch (ArgumentParserException e) {
+            parser.handleError(e);
             System.exit(1);
         }
     }
