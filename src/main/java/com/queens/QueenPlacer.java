@@ -89,7 +89,7 @@ public class QueenPlacer {
 
         // Calculate slopes from each queen to other queens moving from top of board down
         Set<Float> slopes = new HashSet<>(N);
-        for (int rowQ1=0; rowQ1 < N; rowQ1++) {
+        for (int rowQ1=0; rowQ1 < N-2; rowQ1++) {
             slopes.clear();
             // Consider only queens below the current queen on the board
             for (int rowQ2=rowQ1+1; rowQ2 < N; rowQ2++) {
