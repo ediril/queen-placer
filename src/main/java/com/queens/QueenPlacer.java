@@ -10,12 +10,9 @@ import java.util.function.Consumer;
 
 public class QueenPlacer {
 
-    private final int size;
     private final List<Integer> columns;
 
     public QueenPlacer(int size) {
-        this.size = size;
-
         // Create the list of column numbers for the board
         columns = new ArrayList<>(size);
         for (int col=0; col < size; col++) {
