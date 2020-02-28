@@ -105,19 +105,20 @@ public class QueenPlacer {
         return false;
     }
 
-    public static void displaySolution(List<Integer> queens) {
-        System.out.println(queens);
+    public static String solutionToAsciiBoard(List<Integer> queens) {
+        StringBuilder sb = new StringBuilder();
 
         for (int queen : queens) {
             for (int col=0; col < queens.size(); col++) {
                 if (queen == col)
-                    System.out.print("Q ");
+                    sb.append("Q ");
                 else
-                    System.out.print(". ");
+                    sb.append(". ");
             }
-            System.out.println("");
+            sb.append(System.getProperty("line.separator"));
         }
-        System.out.println("");
+
+        return sb.toString();
     }
 
     public static String report(int numSolutions) {
