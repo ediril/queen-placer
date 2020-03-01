@@ -22,6 +22,9 @@ public class Main {
                 System.exit(1);
             }
 
+            System.out.println(String.format("Using %s method..",
+                    ns.get("permuting") ? "permutation" : "factorial"));
+
             QueenPlacer placer = ns.get("permuting") ?
                     new PermutingQueenPlacer(N) : new EliminatingQueenPlacer(N);
 
