@@ -29,7 +29,7 @@ public class Main {
                     new PermutingQueenPlacer(N) : new EliminatingQueenPlacer(N);
 
             Result result = placer.findSolutions(solution -> {
-                System.out.println(QueenPlacer.solutionToAsciiBoard(solution));
+                System.out.println(QueenPlacer.solutionToAscii(solution));
             });
 
             System.out.println(result.report());

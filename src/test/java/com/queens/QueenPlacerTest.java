@@ -21,7 +21,7 @@ public class QueenPlacerTest {
                 ". . . . . . . Q \n" +
                 ". . . . . Q . . \n" +
                 ". . Q . . . . . \n";
-        String actual = QueenPlacer.solutionToAsciiBoard(solution);
+        String actual = QueenPlacer.solutionToAscii(solution);
 
         assertEquals(expected, actual);
     }

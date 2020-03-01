@@ -89,7 +89,7 @@ public abstract class QueenPlacer {
      * @param queenPlacement    Placement of queens in list format
      * @return                  String which holds the ASCII art that can be printed to CLI
      */
-    public static String solutionToAsciiBoard(List<Integer> queenPlacement) {
+    public static String solutionToAscii(List<Integer> queenPlacement) {
         StringBuilder sb = new StringBuilder();
 
         for (int queen : queenPlacement) {
