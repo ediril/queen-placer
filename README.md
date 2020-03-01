@@ -7,8 +7,8 @@ N queens on an NxN chessboard such that:
 
 It implements two methods to find possible solutions:
 1. Permutation: All possible permutations of queen placements are generated and evaluated
-2. Elimination: Starting from the top of the board, possible queen placements are generated 
-iteratively generated row by row, skipping configurations that are not valid    
+2. Elimination: Starting from the top of the board, possible queen placements are iteratively 
+generated row by row, skipping configurations that would allow the queens to attack each other    
 
 # Prerequisites
 * Java version >= 8
