@@ -18,7 +18,7 @@ public class Main {
                 System.exit(1);
             }
 
-            QueenPlacer placer = new QueenPlacer(N);
+            QueenPlacer placer = new PermutingQueenPlacer(N);
 
             System.out.println(String.format("Searching through %s possible solutions\n",
                     placer.numberOfPossibleSolutions().toString()));
