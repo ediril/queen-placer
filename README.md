@@ -28,12 +28,20 @@ iteratively generated row by row, skipping configurations that are not valid
 
 # Usage
 ~~~ sh
- java -jar build/libs/queen_placer-1.0.0.jar <board_size>
+ java -jar build/libs/queen_placer [-h] [-p] [-d] board_size
+
+ positional arguments:
+   board_size
+
+ named arguments:
+   -h, --help             show this help message and exit
+   -p, --permuting
+   -d, --display
 ~~~
 
 # Example outputs
 ~~~ sh
- java -jar build/libs/queen_placer-1.0.0.jar 4 -p -d
+ java -jar build/libs/queen_placer.jar 4 -p -d
  Using 'permutation' method
  . . Q .
  Q . . .
@@ -50,7 +58,7 @@ iteratively generated row by row, skipping configurations that are not valid
 ~~~
 
 ~~~ sh
- java -jar build/libs/queen_placer-1.0.0.jar 4 -d
+ java -jar build/libs/queen_placer.jar 4 -d
  Using 'elimination' method
  . . Q .
  Q . . .
