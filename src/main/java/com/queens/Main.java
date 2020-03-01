@@ -12,6 +12,7 @@ public class Main {
         ArgumentParser parser = ArgumentParsers.newFor("queen_placer").build();
         parser.addArgument("board_size").type(Integer.class).required(true);
         parser.addArgument("-p", "--permuting").action(Arguments.storeConst()).setConst(true).setDefault(false);
+        parser.addArgument("-d", "--display").action(Arguments.storeConst()).setConst(true).setDefault(false);
 
         try {
             Namespace ns = parser.parseArgs(args);
@@ -22,14 +23,16 @@ public class Main {
                 System.exit(1);
             }
 
-            System.out.println(String.format("Using %s method..",
-                    ns.get("permuting") ? "permutation" : "factorial"));
+            System.out.println(String.format("Using %s method",
+                    ns.get("permuting") ? "'permutation'" : "'elimination'"));
 
             QueenPlacer placer = ns.get("permuting") ?
                     new PermutingQueenPlacer(N) : new EliminatingQueenPlacer(N);
 
             Result result = placer.findSolutions(solution -> {
-                System.out.println(QueenPlacer.solutionToAscii(solution));
+                if (ns.get("display")) {
+                    System.out.println(QueenPlacer.solutionToAscii(solution));
+                }
             });
 
             System.out.println(result.report());
