@@ -2,7 +2,6 @@ package com.queens;
 
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -10,11 +9,8 @@ import java.util.function.Consumer;
 public class PermutingQueenPlacer extends QueenPlacer {
 
     private final List<Integer> columns;
-    private final int boardSize;
 
     public PermutingQueenPlacer(int boardSize) {
-        this.boardSize = boardSize;
-
         // Create the list of column numbers for the board
         columns = new ArrayList<>(boardSize);
         for (int col=0; col < boardSize; col++) {
@@ -64,17 +60,5 @@ public class PermutingQueenPlacer extends QueenPlacer {
         }
 
         return new Result(numSolutions, numPossibilitiesEvaluated);
-    }
-
-    /**
-     * Calculates number of possible solutions for the given board size
-     */
-    public BigInteger numberOfPossibleSolutions() {
-        BigInteger factorial = new BigInteger("1");
-        for (int i = 1; i <= boardSize; i++) {
-            factorial = factorial.multiply(new BigInteger(i + ""));
-        }
-
-        return factorial;
     }
 }

@@ -1,9 +1,5 @@
 package com.queens;
 
-import org.apache.commons.collections4.iterators.PermutationIterator;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,11 +17,6 @@ public abstract class QueenPlacer {
      * @return          {@link Result} object
      */
     public abstract Result findSolutions(Consumer<List<Integer>> solution);
-
-    /**
-     * Calculates number of possible solutions for the given board size
-     */
-    public abstract BigInteger numberOfPossibleSolutions();
 
     /**
      * Check if the given queen placement contains any diagonal attacks
