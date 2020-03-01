@@ -70,6 +70,7 @@ iteratively generated row by row, skipping configurations that are not valid
  Q . . .
  . . Q .
 
- 24 possibilities evaluated
+ 16 solution nodes generated
+ 2 possibilities evaluated
  2 solutions found
 ~~~
