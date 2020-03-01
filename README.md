@@ -26,12 +26,10 @@ N queens on an NxN chessboard such that:
  java -jar build/libs/queen_placer-1.0.0.jar <board_size>
 ~~~
 
-# Example output
+# Example outputs
 ~~~ sh
- java -jar build/libs/queen_placer-1.0.0.jar 4
-
- Searching through 24 possible solutions
-
+ java -jar build/libs/queen_placer-1.0.0.jar 4 -p -d
+ Using 'permutation' method
  . . Q .
  Q . . .
  . . . Q
@@ -42,5 +40,23 @@ N queens on an NxN chessboard such that:
  Q . . .
  . . Q .
 
+ 24 possibilities evaluated
+ 2 solutions found
+~~~
+
+~~~ sh
+ java -jar build/libs/queen_placer-1.0.0.jar 4 -d
+ Using 'elimination' method
+ . . Q .
+ Q . . .
+ . . . Q
+ . Q . .
+
+ . Q . .
+ . . . Q
+ Q . . .
+ . . Q .
+
+ 24 possibilities evaluated
  2 solutions found
 ~~~
