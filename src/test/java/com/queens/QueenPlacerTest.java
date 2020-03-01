@@ -10,13 +10,6 @@ import static org.junit.Assert.*;
 public class QueenPlacerTest {
 
     @Test
-    public void reportResults() {
-        assertEquals("No solutions found", QueenPlacer.report(0));
-        assertEquals("1 solution found", QueenPlacer.report(1));
-        assertEquals("2 solutions found", QueenPlacer.report(2));
-    }
-
-    @Test
     public void solutionToAsciiBoard() {
         List<Integer> solution = Arrays.asList(4, 6, 0, 3, 1, 7, 5, 2);
         String expected =

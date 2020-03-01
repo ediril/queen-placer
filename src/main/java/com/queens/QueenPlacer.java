@@ -18,9 +18,9 @@ public abstract class QueenPlacer {
      * 2) No three queens are in a straight line at ANY angle
      *
      * @param solution  lambda function to call when a solution is found
-     * @return          number of found solutions
+     * @return          {@link Result} object
      */
-    public abstract int findSolutions(Consumer<List<Integer>> solution);
+    public abstract Result findSolutions(Consumer<List<Integer>> solution);
 
     /**
      * Calculates number of possible solutions for the given board size
@@ -113,11 +113,5 @@ public abstract class QueenPlacer {
         }
 
         return sb.toString();
-    }
-
-    public static String report(int numSolutions) {
-        return String.format("%s solution%s found",
-                numSolutions == 0 ? "No" : numSolutions,
-                numSolutions != 1 ? "s" : "");
     }
 }
