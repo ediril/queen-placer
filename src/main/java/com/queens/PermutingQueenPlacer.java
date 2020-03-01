@@ -31,7 +31,7 @@ public class PermutingQueenPlacer extends QueenPlacer {
      * @param solution  lambda function to call when a solution is found
      * @return          number of found solutions
      */
-    public int findSolutions(Consumer<List<Integer>> solution) {
+    public Result findSolutions(Consumer<List<Integer>> solution) {
         // Iteratively generate permutations of column numbers
         // Uses Steinhaus-Johnson-Trotter algorithm, aka "Plain Changes")
         PermutationIterator<Integer> permIterator = new PermutationIterator<>(columns);
@@ -51,9 +51,11 @@ public class PermutingQueenPlacer extends QueenPlacer {
         // 3 Q . . . .
         // 4 . . . . Q
 
+        int numPossibilitiesEvaluated = 0;
         int numSolutions = 0;
         while (permIterator.hasNext()) {
             List<Integer> permutation = permIterator.next();
+            numPossibilitiesEvaluated++;
 
             if (!containsDiagonalAttack(permutation) && !containsStraightLinePlacement(permutation)) {
                 numSolutions++;
@@ -61,7 +63,7 @@ public class PermutingQueenPlacer extends QueenPlacer {
             }
         }
 
-        return numSolutions;
+        return new Result(numSolutions, numPossibilitiesEvaluated);
     }
 
     /**

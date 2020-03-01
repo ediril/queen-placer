@@ -20,14 +20,11 @@ public class Main {
 
             QueenPlacer placer = new PermutingQueenPlacer(N);
 
-            System.out.println(String.format("Searching through %s possible solutions\n",
-                    placer.numberOfPossibleSolutions().toString()));
-
-            int numSolutions = placer.findSolutions(solution -> {
+            Result result = placer.findSolutions(solution -> {
                 System.out.println(QueenPlacer.solutionToAsciiBoard(solution));
             });
 
-            System.out.println(QueenPlacer.report(numSolutions));
+            System.out.println(result.report());
 
         } catch (ArgumentParserException e) {
             parser.handleError(e);

@@ -9,6 +9,14 @@ public class Result {
         this.numPossibilitiesEvaluated = numPossibilitiesEvaluated;
     }
 
+    public int numSolutions() {
+        return numSolutions;
+    }
+
+    public int numPossibilitiesEvaluated() {
+        return numPossibilitiesEvaluated;
+    }
+
     public String report() {
         return String.format("%s solution%s found (%s possibilities evaluated)",
                 numSolutions == 0 ? "No" : numSolutions,
