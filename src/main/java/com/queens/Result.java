@@ -18,9 +18,9 @@ public class Result {
     }
 
     public String report() {
-        return String.format("%s solution%s found (%s possibilities evaluated)",
+        return String.format("%s possibilities evaluated\n%s solution%s found",
+                numPossibilitiesEvaluated,
                 numSolutions == 0 ? "No" : numSolutions,
-                numSolutions != 1 ? "s" : "",
-                numPossibilitiesEvaluated);
+                numSolutions != 1 ? "s" : "");
     }
 }

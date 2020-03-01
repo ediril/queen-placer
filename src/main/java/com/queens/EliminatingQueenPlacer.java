@@ -25,6 +25,7 @@ public class EliminatingQueenPlacer extends QueenPlacer {
     public Result findSolutions(Consumer<List<Integer>> solution) {
         int numPossibilitiesEvaluated = 0;
         int numSolutions = 0;
+        int numSolutionNodes = 0;
         Deque<List<Integer>> queue = new LinkedList<>();
 
         // Seed the queue
@@ -32,9 +33,11 @@ public class EliminatingQueenPlacer extends QueenPlacer {
 
         while (queue.size() > 0) {
             List<Integer> solutionNode = queue.remove();
-            numPossibilitiesEvaluated++;
+            numSolutionNodes++;
 
             if (solutionNode.size() == boardSize) {
+                numPossibilitiesEvaluated++;
+
                 if (!containsStraightLinePlacement(solutionNode)) {
                     numSolutions++;
                     solution.accept(solutionNode);
@@ -43,6 +46,8 @@ public class EliminatingQueenPlacer extends QueenPlacer {
                 createSolutionNodes(solutionNode, queue);
             }
         }
+
+        System.out.println(String.format("%s solution nodes generated", numSolutionNodes));
 
         return new Result(numSolutions, numPossibilitiesEvaluated);
     }
