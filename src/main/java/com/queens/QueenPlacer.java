@@ -8,8 +8,7 @@ import java.util.function.Consumer;
 public abstract class QueenPlacer {
 
     /**
-     * Iteratively generates permutations of possible queen placements and
-     * finds the ones that obey the following two constraints:
+     * Finds possible queen placements that obey the following two constraints:
      * 1) None of the queens can attack each other
      * 2) No three queens are in a straight line at ANY angle
      *

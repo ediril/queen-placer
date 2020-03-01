@@ -19,13 +19,7 @@ public class PermutingQueenPlacer extends QueenPlacer {
     }
 
     /**
-     * Iteratively generates permutations of possible queen placements and
-     * finds the ones that obey the following two constraints:
-     * 1) None of the queens can attack each other
-     * 2) No three queens are in a straight line at ANY angle
-     *
-     * @param solution  lambda function to call when a solution is found
-     * @return          number of found solutions
+     * Iteratively generates and evaluates permutations of possible queen placements
      */
     public Result findSolutions(Consumer<List<Integer>> solution) {
         // Iteratively generate permutations of column numbers
