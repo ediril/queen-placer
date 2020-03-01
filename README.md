@@ -5,6 +5,11 @@ N queens on an NxN chessboard such that:
 1. None of the queens can attack each other
 2. No three queens are in a straight line at ANY angle
 
+It implements two methods to find possible solutions:
+1. Permutation: All possible permutations of queen placements are generated and evaluated
+2. Elimination: Starting from the top of the board, possible queen placements are generated 
+iteratively generated row by row, skipping configurations that are not valid    
+
 # Prerequisites
 * Java version >= 8
 * Gradle version >= 6.2
