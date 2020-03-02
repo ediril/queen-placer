@@ -17,8 +17,7 @@ public class EliminatingQueenPlacer extends QueenPlacer {
 
     /**
      * Searches possible solutions by iteratively generating new solution nodes based on
-     * previously placed queens, skipping possibilities that are not valid based on queen
-     * attack patterns
+     * previously placed queens, removing configurations where queens can attack each other
      */
     public Result findSolutions(Consumer<List<Integer>> solution) {
         int numPossibilitiesEvaluated = 0;
