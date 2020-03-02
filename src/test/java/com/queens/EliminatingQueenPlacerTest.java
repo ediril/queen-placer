@@ -23,7 +23,7 @@ public class EliminatingQueenPlacerTest {
     }
 
     @Test
-    public void solutionNodesRow1() {
+    public void solutionNodesFirstRow() {
         EliminatingQueenPlacer placer = new EliminatingQueenPlacer(3);
         Deque<List<Integer>> queue = new LinkedList<>();
 
@@ -34,7 +34,7 @@ public class EliminatingQueenPlacerTest {
     }
 
     @Test
-    public void solutionNodesRow2() {
+    public void solutionNodesSecondRow() {
         EliminatingQueenPlacer placer = new EliminatingQueenPlacer(4);
         Deque<List<Integer>> queue = new LinkedList<>();
 
