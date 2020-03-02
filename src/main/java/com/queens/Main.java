@@ -9,7 +9,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
 public class Main {
 
     public static void main(String[] args) {
-        ArgumentParser parser = ArgumentParsers.newFor("queen_placer").build();
+        ArgumentParser parser = ArgumentParsers.newFor("java -jar queen-placer").build();
         parser.addArgument("board_size").type(Integer.class).required(true);
         parser.addArgument("-p", "--permuting").action(Arguments.storeConst()).setConst(true).setDefault(false);
         parser.addArgument("-d", "--display").action(Arguments.storeConst()).setConst(true).setDefault(false);

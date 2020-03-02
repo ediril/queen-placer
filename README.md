@@ -16,8 +16,8 @@ generated row by row, skipping configurations that would allow the queens to att
 
 # Building
 ~~~ sh
- git clone https://github.com/ediril/queen_placer.git
- cd queen_placer
+ git clone https://github.com/ediril/queen-placer.git
+ cd queen-placer
  gradle jar
 ~~~
 
@@ -28,7 +28,7 @@ generated row by row, skipping configurations that would allow the queens to att
 
 # Usage
 ~~~ sh
- java -jar build/libs/queen_placer [-h] [-p] [-d] board_size
+ java -jar build/libs/queen-placer [-h] [-p] [-d] board_size
 
  positional arguments:
    board_size
@@ -41,7 +41,7 @@ generated row by row, skipping configurations that would allow the queens to att
 
 # Example outputs
 ~~~ sh
- java -jar build/libs/queen_placer.jar 4 -p -d
+ java -jar build/libs/queen-placer.jar 4 -p -d
  Using 'permutation' method
  . . Q .
  Q . . .
@@ -58,7 +58,7 @@ generated row by row, skipping configurations that would allow the queens to att
 ~~~
 
 ~~~ sh
- java -jar build/libs/queen_placer.jar 4 -d
+ java -jar build/libs/queen-placer.jar 4 -d
  Using 'elimination' method
  . . Q .
  Q . . .
