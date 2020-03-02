@@ -12,9 +12,7 @@ public class EliminatingQueenPlacer extends QueenPlacer {
 
     public EliminatingQueenPlacer(int boardSize) {
         this.boardSize = boardSize;
-
-        columns = IntStream.range(0, boardSize).boxed()
-                .collect(Collectors.toCollection(HashSet::new));
+        this.columns = IntStream.range(0, boardSize).boxed().collect(Collectors.toCollection(HashSet::new));
     }
 
     /**
