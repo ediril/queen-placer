@@ -6,6 +6,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class EliminatingQueenPlacerTest {
 
@@ -30,7 +31,7 @@ public class EliminatingQueenPlacerTest {
         placer.createSolutionNodes(Collections.singletonList(0), queue);
 
         assertEquals(1, queue.size());
-        assertTrue(queue.containsAll(Collections.singletonList(Arrays.asList(0, 2))));
+        assertThat(queue, contains(Arrays.asList(0, 2)));
     }
 
     @Test
@@ -41,7 +42,7 @@ public class EliminatingQueenPlacerTest {
         placer.createSolutionNodes(Arrays.asList(0, 3), queue);
 
         assertEquals(1, queue.size());
-        assertTrue(queue.containsAll(Collections.singletonList(Arrays.asList(0, 3, 1))));
+        assertThat(queue, contains(Arrays.asList(0, 3, 1)));
     }
 
     @Test
