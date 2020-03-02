@@ -8,12 +8,14 @@ N queens on an NxN chessboard such that:
 It implements three methods to find possible solutions:
 1. Permutation: All possible permutations of queen placements are generated and evaluated
 2. Elimination: Starting from the top of the board, possible queen placements are iteratively 
-generated row by row, skipping configurations that would allow the queens to attack each other
-3. Multithreaded Elimination: Similar to method 2 except that it uses multiple threads to generate the placements 
+generated row by row, removing configurations that would allow the queens to attack each other
+3. Multithreaded Elimination: Similar to method 2 but uses multiple threads to generate the placements 
+for improved execution speed
 
 # Prerequisites
 * Java version >= 9
 * Gradle version >= 6.2
+* Currently only OSX 10.14+ (Mojave or later) is officially supported
 
 # Building
 ~~~ sh
@@ -26,7 +28,6 @@ $ gradle jar
 ~~~ sh
 $ gradle test
 ~~~
-Note that development and testing is currently done on OSX 10.14 (Mojave)
 
 # Usage
 ~~~ sh
