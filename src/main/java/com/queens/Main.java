@@ -4,6 +4,7 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.MutuallyExclusiveGroup;
 import net.sourceforge.argparse4j.inf.Namespace;
 
 public class Main {
@@ -11,8 +12,10 @@ public class Main {
     public static void main(String[] args) {
         ArgumentParser parser = ArgumentParsers.newFor("java -jar queen-placer").build();
         parser.addArgument("board_size").type(Integer.class).required(true);
-        parser.addArgument("-p", "--permuting").action(Arguments.storeConst()).setConst(true).setDefault(false);
         parser.addArgument("-d", "--display").action(Arguments.storeConst()).setConst(true).setDefault(false);
+        MutuallyExclusiveGroup group = parser.addMutuallyExclusiveGroup();
+        group.addArgument("-p", "--permuting").action(Arguments.storeConst()).setConst(true).setDefault(false);
+        group.addArgument("-mt", "--multithreaded").action(Arguments.storeConst()).setConst(true).setDefault(false);
 
         try {
             Namespace ns = parser.parseArgs(args);
@@ -23,11 +26,17 @@ public class Main {
                 System.exit(1);
             }
 
-            System.out.println(String.format("Using %s method",
-                    ns.get("permuting") ? "'permutation'" : "'elimination'"));
-
-            QueenPlacer placer = ns.get("permuting") ?
-                    new PermutingQueenPlacer(N) : new EliminatingQueenPlacer(N);
+            QueenPlacer placer;
+            if (ns.get("permuting")) {
+                placer = new PermutingQueenPlacer(N);
+                System.out.println("Using 'permutation' method");
+            } else if (ns.get("multithreaded")) {
+                placer = new MultithreadedEliminatingQueenPlacer(N);
+                System.out.println("Using 'multithreaded elimination' method");
+            } else {
+                placer = new EliminatingQueenPlacer(N);
+                System.out.println("Using 'elimination' method");
+            }
 
             Result result = placer.findSolutions(solution -> {
                 if (ns.get("display")) {
