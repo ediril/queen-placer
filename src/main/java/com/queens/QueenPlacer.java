@@ -1,8 +1,6 @@
 package com.queens;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 public abstract class QueenPlacer {
@@ -103,5 +101,35 @@ public abstract class QueenPlacer {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Creates new solution nodes based on the current solution node
+     */
+    public static List<List<Integer>> createSolutionNodes(
+            List<Integer> solutionNode, Set<Integer> columns) {
+        int nextRow = solutionNode.size();
+        Set<Integer> availableColumns = new HashSet<>(columns);
+
+        // Eliminate available columns based on queens already added to the solution
+        for (int row=0; row < solutionNode.size(); row++) {
+            int column = solutionNode.get(row);
+            // vertical
+            availableColumns.remove(column);
+            // right diagonal
+            availableColumns.remove(column + (nextRow - row));
+            // left diagonal
+            availableColumns.remove(column - (nextRow - row));
+        }
+
+        // Create new solution nodes using the remaining blank columns
+        List<List<Integer>> solutionNodes = new ArrayList<>(availableColumns.size());
+        for (int column : availableColumns) {
+            List<Integer> newSolutionNode = new ArrayList<>(solutionNode);
+            newSolutionNode.add(column);
+            solutionNodes.add(newSolutionNode);
+        }
+
+        return solutionNodes;
     }
 }

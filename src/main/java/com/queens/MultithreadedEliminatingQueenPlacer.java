@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
 
+    private final int boardSize;
     private final int threadCount;
     private final Set<Integer> columns;
 
@@ -17,6 +18,7 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
     }
 
     public MultithreadedEliminatingQueenPlacer(int boardSize, int threadCount) {
+        this.boardSize = boardSize;
         this.threadCount = threadCount;
         this.columns = IntStream.range(0, boardSize).boxed().collect(Collectors.toCollection(HashSet::new));
     }
@@ -27,10 +29,13 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
      * attack patterns.
      */
     public Result findSolutions(Consumer<List<Integer>> solution) {
-        BlockingDeque<List<Integer>> queue = new LinkedBlockingDeque<>();
+        // Seed the queue
+        List<List<Integer>> newSolutionNodes = createSolutionNodes(new ArrayList<>(boardSize), columns);
+        BlockingDeque<List<Integer>> queue = new LinkedBlockingDeque<>(newSolutionNodes);
+
+        // Create threads for generating solution nodes
         List<SolutionGenerator> generators = createGenerators(queue, columns);
         List<Thread> threads = createThreads(generators);
-
         try {
             for (Thread thread : threads) {
                 thread.join();
@@ -39,6 +44,7 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
             System.out.println("threads interrupted");
         }
 
+        // Collect the results from threads into the final result
         int numSolutionNodes = 0;
         int numPossibilitiesEvaluated = 0;
         int numSolutions = 0;
@@ -62,8 +68,7 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
 
     protected List<SolutionGenerator> createGenerators(BlockingDeque<List<Integer>> queue, Set<Integer> columns) {
         List<SolutionGenerator> generators = new ArrayList<>(threadCount);
-        generators.add(new SolutionGenerator(queue, columns, true));
-        for (int i = 0; i < threadCount - 1; i++) {
+        for (int i = 0; i < threadCount; i++) {
             generators.add(new SolutionGenerator(queue, columns));
         }
         return generators;

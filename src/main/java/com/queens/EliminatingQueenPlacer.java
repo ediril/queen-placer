@@ -24,12 +24,12 @@ public class EliminatingQueenPlacer extends QueenPlacer {
         int numPossibilitiesEvaluated = 0;
         int numSolutions = 0;
         int numSolutionNodes = 0;
-        Deque<List<Integer>> queue = new LinkedList<>();
 
         // Seed the queue
-        createSolutionNodes(new ArrayList<>(boardSize), queue);
+        List<List<Integer>> newSolutionNodes = createSolutionNodes(new ArrayList<>(boardSize), columns);
+        Deque<List<Integer>> queue = new LinkedList<>(newSolutionNodes);
 
-        while (queue.size() > 0) {
+        while (!queue.isEmpty()) {
             List<Integer> solutionNode = queue.remove();
             numSolutionNodes++;
 
@@ -41,38 +41,13 @@ public class EliminatingQueenPlacer extends QueenPlacer {
                     solution.accept(solutionNode);
                 }
             } else {
-                createSolutionNodes(solutionNode, queue);
+                newSolutionNodes = createSolutionNodes(solutionNode, columns);
+                queue.addAll(newSolutionNodes);
             }
         }
 
         System.out.println(String.format("%s solution nodes generated", numSolutionNodes));
 
         return new Result(numSolutions, numPossibilitiesEvaluated);
-    }
-
-    /**
-     * Creates new solution nodes based on the current solution node
-     */
-    void createSolutionNodes(List<Integer> solutionNode, Deque<List<Integer>> queue) {
-        int nextRow = solutionNode.size();
-        Set<Integer> availableColumns = new HashSet<>(columns);
-
-        // Eliminate available columns based on queens already added to the solution
-        for (int row=0; row < solutionNode.size(); row++) {
-            int column = solutionNode.get(row);
-            // vertical
-            availableColumns.remove(column);
-            // right diagonal
-            availableColumns.remove(column + (nextRow - row));
-            // left diagonal
-            availableColumns.remove(column - (nextRow - row));
-        }
-
-        // Create new solution nodes using the remaining blank columns
-        for (int column : availableColumns) {
-            List<Integer> newSolution = new ArrayList<>(solutionNode);
-            newSolution.add(column);
-            queue.add(newSolution);
-        }
     }
 }
