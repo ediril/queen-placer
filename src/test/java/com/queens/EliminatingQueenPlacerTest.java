@@ -18,9 +18,8 @@ public class EliminatingQueenPlacerTest {
         placer.createSolutionNodes(new ArrayList<>(), queue);
 
         assertEquals(3, queue.size());
-        assertTrue(queue.containsAll(Arrays.asList(
-                Collections.singletonList(0), Collections.singletonList(1), Collections.singletonList(2)
-        )));
+        assertThat(queue, containsInAnyOrder(
+                Collections.singletonList(0), Collections.singletonList(1), Collections.singletonList(2)));
     }
 
     @Test
@@ -52,11 +51,8 @@ public class EliminatingQueenPlacerTest {
         List<List<Integer>> actual = new ArrayList<>();
         Result result = placer.findSolutions(actual::add);
 
-        List<List<Integer>> expected = new ArrayList<>();
-        expected.add(Arrays.asList(1, 3, 0, 2));
-        expected.add(Arrays.asList(2, 0, 3, 1));
-
-        assertThat(actual, containsInAnyOrder(expected.toArray()));
+        assertThat(actual, containsInAnyOrder(
+                Arrays.asList(1, 3, 0, 2), Arrays.asList(2, 0, 3, 1)));
         assertEquals(2, result.numPossibilitiesEvaluated());
         assertEquals(2, result.numSolutions());
     }
@@ -77,18 +73,16 @@ public class EliminatingQueenPlacerTest {
         List<List<Integer>> actual = new ArrayList<>();
         Result result = placer.findSolutions(actual::add);
 
-        List<List<Integer>> expected = new ArrayList<>();
-        expected.add(Arrays.asList(4, 6, 0, 3, 1, 7, 5, 2));
-        expected.add(Arrays.asList(5, 3, 0, 4, 7, 1, 6, 2));
-        expected.add(Arrays.asList(5, 2, 0, 6, 4, 7, 1, 3));
-        expected.add(Arrays.asList(2, 4, 7, 3, 0, 6, 1, 5));
-        expected.add(Arrays.asList(2, 5, 7, 1, 3, 0, 6, 4));
-        expected.add(Arrays.asList(2, 6, 1, 7, 4, 0, 3, 5));
-        expected.add(Arrays.asList(3, 1, 7, 4, 6, 0, 2, 5));
-        expected.add(Arrays.asList(5, 1, 6, 0, 3, 7, 4, 2));
-
-        assertThat(actual, containsInAnyOrder(expected.toArray()));
         assertEquals(92, result.numPossibilitiesEvaluated());
         assertEquals(8, result.numSolutions());
+        assertThat(actual, containsInAnyOrder(
+            Arrays.asList(4, 6, 0, 3, 1, 7, 5, 2),
+            Arrays.asList(5, 3, 0, 4, 7, 1, 6, 2),
+            Arrays.asList(5, 2, 0, 6, 4, 7, 1, 3),
+            Arrays.asList(2, 4, 7, 3, 0, 6, 1, 5),
+            Arrays.asList(2, 5, 7, 1, 3, 0, 6, 4),
+            Arrays.asList(2, 6, 1, 7, 4, 0, 3, 5),
+            Arrays.asList(3, 1, 7, 4, 6, 0, 2, 5),
+            Arrays.asList(5, 1, 6, 0, 3, 7, 4, 2)));
     }
 }
