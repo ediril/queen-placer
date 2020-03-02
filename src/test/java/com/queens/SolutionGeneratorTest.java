@@ -24,26 +24,19 @@ public class SolutionGeneratorTest {
     }
 
     @Test
-    public void seedTheQueue() {
-        SolutionGenerator placer = new SolutionGenerator(queue, columns, true);
+    public void emptyQueue() {
+        SolutionGenerator placer = new SolutionGenerator(queue, columns);
         placer.run();
 
         List<List<Integer>> solutions = placer.solutions();
         int numSolutionNodes = placer.numSolutionNodes();
 
-        List<List<Integer>> expected = new ArrayList<>();
-        expected.add(Arrays.asList(1, 3, 0, 2));
-        expected.add(Arrays.asList(2, 0, 3, 1));
-
-        assertEquals(16, numSolutionNodes);
-        assertEquals(2, solutions.size());
-        assertThat(solutions, containsInAnyOrder(
-                Arrays.asList(1, 3, 0, 2), Arrays.asList(2, 0, 3, 1)));
+        assertEquals(0, numSolutionNodes);
+        assertEquals(0, solutions.size());
     }
 
     @Test
-    public void preexistingQueueFirstRow() throws InterruptedException {
-        // Add a single solution node as seed
+    public void seededQueue() throws InterruptedException {
         queue.putFirst(Collections.singletonList(1));
 
         SolutionGenerator placer = new SolutionGenerator(queue, columns);
@@ -53,23 +46,6 @@ public class SolutionGeneratorTest {
         int numSolutionNodes = placer.numSolutionNodes();
 
         assertEquals(4, numSolutionNodes);
-        assertEquals(1, solutions.size());
-        assertThat(solutions, containsInAnyOrder(
-                Arrays.asList(1, 3, 0, 2)));
-    }
-
-    @Test
-    public void preexistingQueueSecondRow() throws InterruptedException {
-        // Add a single solution node as seed
-        queue.putFirst(Arrays.asList(1, 3));
-
-        SolutionGenerator placer = new SolutionGenerator(queue, columns);
-        placer.run();
-
-        List<List<Integer>> solutions = placer.solutions();
-        int numSolutionNodes = placer.numSolutionNodes();
-
-        assertEquals(3, numSolutionNodes);
         assertEquals(1, solutions.size());
         assertThat(solutions, containsInAnyOrder(
                 Arrays.asList(1, 3, 0, 2)));

@@ -2,9 +2,12 @@ package com.queens;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.*;
 
 public class QueenPlacerTest {
@@ -51,5 +54,42 @@ public class QueenPlacerTest {
         assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(2, 0, 3, 1)));
         assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(0, 3, 1, 4, 3)));
         assertFalse( QueenPlacer.containsStraightLinePlacement( Arrays.asList(5, 3, 0, 4, 7, 1, 6, 2)));
+    }
+
+    @Test
+    public void solutionNodesEmptyQueue() {
+        Set<Integer> columns = IntStream.range(0, 3)
+                .boxed().collect(Collectors.toCollection(HashSet::new));
+
+        List<List<Integer>> newSolutionNodes =
+            QueenPlacer.createSolutionNodes(new ArrayList<>(), columns);
+
+        assertEquals(3, newSolutionNodes.size());
+        assertThat(newSolutionNodes, containsInAnyOrder(
+                Collections.singletonList(0), Collections.singletonList(1), Collections.singletonList(2)));
+    }
+
+    @Test
+    public void solutionNodesFirstRow() {
+        Set<Integer> columns = IntStream.range(0, 3)
+                .boxed().collect(Collectors.toCollection(HashSet::new));
+
+        List<List<Integer>> newSolutionNodes =
+            QueenPlacer.createSolutionNodes(Collections.singletonList(0), columns);
+
+        assertEquals(1, newSolutionNodes.size());
+        assertThat(newSolutionNodes, contains(Arrays.asList(0, 2)));
+    }
+
+    @Test
+    public void solutionNodesSecondRow() {
+        Set<Integer> columns = IntStream.range(0, 4)
+                .boxed().collect(Collectors.toCollection(HashSet::new));
+
+        List<List<Integer>> newSolutionNodes =
+                QueenPlacer.createSolutionNodes(Arrays.asList(0, 3), columns);
+
+        assertEquals(1, newSolutionNodes.size());
+        assertThat(newSolutionNodes, contains(Arrays.asList(0, 3, 1)));
     }
 }

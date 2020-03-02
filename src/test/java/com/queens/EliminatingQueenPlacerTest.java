@@ -6,43 +6,8 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class EliminatingQueenPlacerTest {
-
-    @Test
-    public void solutionNodesEmptyQueue() {
-        EliminatingQueenPlacer placer = new EliminatingQueenPlacer(3);
-        Deque<List<Integer>> queue = new LinkedList<>();
-
-        placer.createSolutionNodes(new ArrayList<>(), queue);
-
-        assertEquals(3, queue.size());
-        assertThat(queue, containsInAnyOrder(
-                Collections.singletonList(0), Collections.singletonList(1), Collections.singletonList(2)));
-    }
-
-    @Test
-    public void solutionNodesFirstRow() {
-        EliminatingQueenPlacer placer = new EliminatingQueenPlacer(3);
-        Deque<List<Integer>> queue = new LinkedList<>();
-
-        placer.createSolutionNodes(Collections.singletonList(0), queue);
-
-        assertEquals(1, queue.size());
-        assertThat(queue, contains(Arrays.asList(0, 2)));
-    }
-
-    @Test
-    public void solutionNodesSecondRow() {
-        EliminatingQueenPlacer placer = new EliminatingQueenPlacer(4);
-        Deque<List<Integer>> queue = new LinkedList<>();
-
-        placer.createSolutionNodes(Arrays.asList(0, 3), queue);
-
-        assertEquals(1, queue.size());
-        assertThat(queue, contains(Arrays.asList(0, 3, 1)));
-    }
 
     @Test
     public void findSolutionsForSize4() {
