@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class QueenPlacerTest {
 
     @Test
-    public void solutionToAsciiBoard() {
+    public void solutionToAscii() {
         List<Integer> solution = Arrays.asList(4, 6, 0, 3, 1, 7, 5, 2);
         String expected =
                 ". . . . Q . . . \n" +
@@ -57,7 +57,7 @@ public class QueenPlacerTest {
     }
 
     @Test
-    public void solutionNodesEmptyQueue() {
+    public void solutionNodesEmpty() {
         Set<Integer> columns = IntStream.range(0, 3)
                 .boxed().collect(Collectors.toCollection(HashSet::new));
 
