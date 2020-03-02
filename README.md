@@ -5,72 +5,81 @@ N queens on an NxN chessboard such that:
 1. None of the queens can attack each other
 2. No three queens are in a straight line at ANY angle
 
-It implements two methods to find possible solutions:
+It implements three methods to find possible solutions:
 1. Permutation: All possible permutations of queen placements are generated and evaluated
 2. Elimination: Starting from the top of the board, possible queen placements are iteratively 
-generated row by row, skipping configurations that would allow the queens to attack each other    
+generated row by row, skipping configurations that would allow the queens to attack each other
+3. Multithreaded Elimination: Similar to method 2 except that it uses multiple threads to generate the placements 
 
 # Prerequisites
-* Java version >= 8
+* Java version >= 9
 * Gradle version >= 6.2
 
 # Building
 ~~~ sh
- git clone https://github.com/ediril/queen-placer.git
- cd queen-placer
- gradle jar
+$ git clone https://github.com/ediril/queen-placer.git
+$ cd queen-placer
+$ gradle jar
 ~~~
 
 # Running tests
 ~~~ sh
- gradle test
+$ gradle test
 ~~~
+Note that development and testing is currently done on OSX 10.14 (Mojave)
 
 # Usage
 ~~~ sh
- java -jar build/libs/queen-placer [-h] [-p] [-d] board_size
+queen-placer [-h] [-d] [-p | -mt] board_size
 
- positional arguments:
-   board_size
+positional arguments:
+  board_size
 
- named arguments:
-   -h, --help             show this help message and exit
-   -p, --permuting
-   -d, --display
+named arguments:
+  -h, --help             show this help message and exit
+  -d, --display
+  -p, --permuting
+  -mt, --multithreaded
 ~~~
 
 # Example outputs
 ~~~ sh
- java -jar build/libs/queen-placer.jar 4 -p -d
- Using 'permutation' method
- . . Q .
- Q . . .
- . . . Q
- . Q . .
+$ java -jar build/libs/queen-placer.jar 4 -p -d
+Using 'permutation' method
+. . Q .
+Q . . .
+. . . Q
+. Q . .
 
- . Q . .
- . . . Q
- Q . . .
- . . Q .
+. Q . .
+. . . Q
+Q . . .
+. . Q .
 
- 24 possibilities evaluated
- 2 solutions found
+24 possibilities evaluated
+2 solutions found
 ~~~
 
 ~~~ sh
- java -jar build/libs/queen-placer.jar 4 -d
- Using 'elimination' method
- . . Q .
- Q . . .
- . . . Q
- . Q . .
+$ time java -jar build/libs/queen-placer.jar 14
+Using 'elimination' method
+27358552 solution nodes generated
+365596 possibilities evaluated
+4416 solutions found
 
- . Q . .
- . . . Q
- Q . . .
- . . Q .
+real	0m25.639s
+user	2m22.655s
+sys	0m1.991s
+~~~
 
- 16 solution nodes generated
- 2 possibilities evaluated
- 2 solutions found
+~~~ sh
+$ time java -jar build/libs/queen-placer.jar 14 -mt
+Using 'multithreaded elimination' method
+27358552 solution nodes generated
+365596 possibilities evaluated
+4416 solutions found
+
+real	0m15.854s
+user	0m29.597s
+sys	0m11.104s
 ~~~
