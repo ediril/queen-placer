@@ -1,25 +1,24 @@
 package com.queens;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
 
-public class SolutionGenerator implements Runnable {
+public class SolutionNodeGenerator implements Runnable {
     private int numSolutionNodes = 0;
-    private final List<List<Integer>> solutions;
+    private final List<List<Integer>> potentialSolutions;
 
     private final BlockingDeque<List<Integer>> queue;
     private final Set<Integer> columns;
     private final int boardSize;
 
-    public SolutionGenerator(BlockingDeque<List<Integer>> queue, Set<Integer> columns) {
+    public SolutionNodeGenerator(BlockingDeque<List<Integer>> queue, Set<Integer> columns) {
         this.queue = queue;
         this.columns = columns;
         this.boardSize = columns.size();
-        this.solutions = new ArrayList<>();
+        this.potentialSolutions = new ArrayList<>();
     }
 
     @Override
@@ -34,7 +33,7 @@ public class SolutionGenerator implements Runnable {
                 numSolutionNodes++;
 
                 if (solutionNode.size() == boardSize) {
-                    solutions.add(solutionNode);
+                    potentialSolutions.add(solutionNode);
                 } else {
                     List<List<Integer>> newSolutionNodes = QueenPlacer.createSolutionNodes(solutionNode, columns);
                     for (List<Integer> node : newSolutionNodes) {
@@ -51,7 +50,7 @@ public class SolutionGenerator implements Runnable {
         return numSolutionNodes;
     }
 
-    public List<List<Integer>> solutions() {
-        return solutions;
+    public List<List<Integer>> potentialSolutions() {
+        return potentialSolutions;
     }
 }

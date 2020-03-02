@@ -16,25 +16,25 @@ public class MultithreadedEliminatingQueenPlacerTest {
     public void findSolutions() {
         QueenPlacer mockPlacer = new MultithreadedEliminatingQueenPlacer(4) {
             @Override
-            protected List<SolutionGenerator> createGenerators(
+            protected List<SolutionNodeGenerator> createGenerators(
                     BlockingDeque<List<Integer>> queue, Set<Integer> columns) {
-                List<SolutionGenerator> generators = new ArrayList<>();
+                List<SolutionNodeGenerator> generators = new ArrayList<>();
 
-                SolutionGenerator generator1 = Mockito.mock(SolutionGenerator.class);
+                SolutionNodeGenerator generator1 = Mockito.mock(SolutionNodeGenerator.class);
                 generators.add(generator1);
-                when(generator1.solutions()).thenReturn(
+                when(generator1.potentialSolutions()).thenReturn(
                         Arrays.asList(Arrays.asList(1, 3, 0, 2), Arrays.asList(0, 1, 2, 3)));
 
-                SolutionGenerator generator2 = Mockito.mock(SolutionGenerator.class);
+                SolutionNodeGenerator generator2 = Mockito.mock(SolutionNodeGenerator.class);
                 generators.add(generator2);
-                when(generator2.solutions()).thenReturn(
+                when(generator2.potentialSolutions()).thenReturn(
                         Arrays.asList(Arrays.asList(2, 0, 3, 1), Arrays.asList(3, 2, 1, 0)));
 
                 return generators;
             }
 
             @Override
-            protected List<Thread> createThreads(List<SolutionGenerator> generators) {
+            protected List<Thread> createThreads(List<SolutionNodeGenerator> generators) {
                 return Collections.emptyList();
             }
         };

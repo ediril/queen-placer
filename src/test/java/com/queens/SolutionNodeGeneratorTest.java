@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.Assert.*;
 
-public class SolutionGeneratorTest {
+public class SolutionNodeGeneratorTest {
 
     private BlockingDeque<List<Integer>> queue;
     private final Set<Integer> columns =
@@ -25,10 +25,10 @@ public class SolutionGeneratorTest {
 
     @Test
     public void emptyQueue() {
-        SolutionGenerator placer = new SolutionGenerator(queue, columns);
+        SolutionNodeGenerator placer = new SolutionNodeGenerator(queue, columns);
         placer.run();
 
-        List<List<Integer>> solutions = placer.solutions();
+        List<List<Integer>> solutions = placer.potentialSolutions();
         int numSolutionNodes = placer.numSolutionNodes();
 
         assertEquals(0, numSolutionNodes);
@@ -39,10 +39,10 @@ public class SolutionGeneratorTest {
     public void seededQueue() throws InterruptedException {
         queue.putFirst(Collections.singletonList(1));
 
-        SolutionGenerator placer = new SolutionGenerator(queue, columns);
+        SolutionNodeGenerator placer = new SolutionNodeGenerator(queue, columns);
         placer.run();
 
-        List<List<Integer>> solutions = placer.solutions();
+        List<List<Integer>> solutions = placer.potentialSolutions();
         int numSolutionNodes = placer.numSolutionNodes();
 
         assertEquals(4, numSolutionNodes);

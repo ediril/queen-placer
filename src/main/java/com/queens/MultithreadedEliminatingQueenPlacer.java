@@ -34,7 +34,7 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
         BlockingDeque<List<Integer>> queue = new LinkedBlockingDeque<>(newSolutionNodes);
 
         // Create threads for generating solution nodes
-        List<SolutionGenerator> generators = createGenerators(queue, columns);
+        List<SolutionNodeGenerator> generators = createGenerators(queue, columns);
         List<Thread> threads = createThreads(generators);
         try {
             for (Thread thread : threads) {
@@ -48,15 +48,15 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
         int numSolutionNodes = 0;
         int numPossibilitiesEvaluated = 0;
         int numSolutions = 0;
-        for (SolutionGenerator generator : generators) {
+        for (SolutionNodeGenerator generator : generators) {
             numSolutionNodes += generator.numSolutionNodes();
 
-            for (List<Integer> solutionNode : generator.solutions()) {
+            for (List<Integer> potentialSolution : generator.potentialSolutions()) {
                 numPossibilitiesEvaluated++;
 
-                if (!containsStraightLinePlacement(solutionNode)) {
+                if (!containsStraightLinePlacement(potentialSolution)) {
                     numSolutions++;
-                    solution.accept(solutionNode);
+                    solution.accept(potentialSolution);
                 }
             }
         }
@@ -66,17 +66,17 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
         return new Result(numSolutions, numPossibilitiesEvaluated);
     }
 
-    protected List<SolutionGenerator> createGenerators(BlockingDeque<List<Integer>> queue, Set<Integer> columns) {
-        List<SolutionGenerator> generators = new ArrayList<>(threadCount);
+    protected List<SolutionNodeGenerator> createGenerators(BlockingDeque<List<Integer>> queue, Set<Integer> columns) {
+        List<SolutionNodeGenerator> generators = new ArrayList<>(threadCount);
         for (int i = 0; i < threadCount; i++) {
-            generators.add(new SolutionGenerator(queue, columns));
+            generators.add(new SolutionNodeGenerator(queue, columns));
         }
         return generators;
     }
 
-    protected List<Thread> createThreads(List<SolutionGenerator> generators) {
+    protected List<Thread> createThreads(List<SolutionNodeGenerator> generators) {
         List<Thread> threads = new ArrayList<>(threadCount);
-        for (SolutionGenerator generator : generators) {
+        for (SolutionNodeGenerator generator : generators) {
             Thread t = new Thread(generator);
             t.start();
             threads.add(t);
