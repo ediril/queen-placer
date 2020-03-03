@@ -3,6 +3,10 @@ package com.queens;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * This is the base class for all queen placing classes so they can share an
+ * interface and utilities common to all
+ */
 public abstract class QueenPlacer {
 
     /**

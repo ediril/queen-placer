@@ -24,8 +24,8 @@ public class MultithreadedEliminatingQueenPlacer extends QueenPlacer {
     }
 
     /**
-     * Uses multiple threads to generate solution nodes. Nodes are generated iteratively based
-     * on previously placed queens, removing configurations where queens can attack each other
+     * Implements the logic of {@link EliminatingQueenPlacer} using multiple threads to
+     * generate solution nodes.
      */
     public Result findSolutions(Consumer<List<Integer>> solution) {
         // Seed the queue

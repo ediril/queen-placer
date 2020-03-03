@@ -17,7 +17,9 @@ public class EliminatingQueenPlacer extends QueenPlacer {
 
     /**
      * Searches possible solutions by iteratively generating new solution nodes based on
-     * previously placed queens, removing configurations where queens can attack each other
+     * previously placed queens, where a solution node is an arrangement of queens on a chessboard
+     * starting from the top of the board moving downward, represented as a list of column indices
+     * with one queen per row.
      */
     public Result findSolutions(Consumer<List<Integer>> solution) {
         int numPossibilitiesEvaluated = 0;
@@ -32,6 +34,7 @@ public class EliminatingQueenPlacer extends QueenPlacer {
             List<Integer> solutionNode = queue.remove();
             numSolutionNodes++;
 
+            // If all queens are added to the board, add it to the list of potential solutions
             if (solutionNode.size() == boardSize) {
                 numPossibilitiesEvaluated++;
 
@@ -40,6 +43,7 @@ public class EliminatingQueenPlacer extends QueenPlacer {
                     solution.accept(solutionNode);
                 }
             } else {
+                // There are more queens to be placed on the board, generate more solution nodes
                 newSolutionNodes = createSolutionNodes(solutionNode, columns);
                 queue.addAll(newSolutionNodes);
             }

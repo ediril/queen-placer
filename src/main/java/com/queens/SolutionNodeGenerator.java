@@ -6,6 +6,9 @@ import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class generates new solution nodes from a given one, adding new queens row by row.
+ */
 public class SolutionNodeGenerator implements Runnable {
     private int numSolutionNodes = 0;
     private final List<List<Integer>> potentialSolutions;
@@ -32,9 +35,11 @@ public class SolutionNodeGenerator implements Runnable {
 
                 numSolutionNodes++;
 
+                // If all queens are added to the board, add it to the list of potential solutions
                 if (solutionNode.size() == boardSize) {
                     potentialSolutions.add(solutionNode);
                 } else {
+                    // There are more queens to be placed on the board, generate more solution nodes
                     List<List<Integer>> newSolutionNodes = QueenPlacer.createSolutionNodes(solutionNode, columns);
                     for (List<Integer> node : newSolutionNodes) {
                         queue.putFirst(node);
